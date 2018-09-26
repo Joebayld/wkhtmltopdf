@@ -1,7 +1,7 @@
 import Foundation
 import Vapor
 
-extension Array where Element: PageProtocol {
+extension Array where Element == PageProtocol {
     func forEach(on container: Container, fm: FileManager, tmpDir: String, iteration: @escaping (GeneratedPage) -> (Void)) throws -> Future<Void> {
         let next: ()->(Future<Void>) = {
             return container.eventLoop.submit { () -> Void in

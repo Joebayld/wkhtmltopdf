@@ -20,11 +20,11 @@ public class WKHTMLTOPDF {
         }
     }
     
-    public func generate<Page>(container: Container, pages: Page...) throws -> EventLoopFuture<Data> where Page: PageProtocol {
+    public func generate(container: Container, pages: PageProtocol...) throws -> EventLoopFuture<Data> {
         return try generate(container: container, pages: pages)
     }
     
-    public func generate<Page>(container: Container, pages: [Page]) throws -> EventLoopFuture<Data> where Page: PageProtocol {
+    public func generate(container: Container, pages: [PageProtocol]) throws -> EventLoopFuture<Data> {
         let fm = FileManager()
         try fm.createDirectory(atPath: tmpDir, withIntermediateDirectories: true)
         
