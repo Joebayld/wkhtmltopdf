@@ -28,10 +28,11 @@ public class WKHTMLTOPDF {
         let fm = FileManager()
         try fm.createDirectory(atPath: tmpDir, withIntermediateDirectories: true)
         
-        var generatedPages: [GeneratedPage] = []
-        return try pages.forEach(on: container, fm: fm, tmpDir: self.tmpDir) { page in
-            generatedPages.append(page)
-            }.flatMap {
+        return try pages.map { page in
+            try page.generate(container, fm: fm, tmpDir: self.tmpDir)
+            }
+            .flatten(on: container)
+            .flatMap { generatedPages in
                 defer {
                     for page in generatedPages {
                         try? fm.removeItem(atPath: page.path)
